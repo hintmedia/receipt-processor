@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.219.1",
+    "googleapis": "^28.0.1",
+    "mailparser": "^2.2.0",
+    "ramda": "^0.25.0",
+    "wkhtmltopdf": "^0.3.4"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.19.1",
+    "eslint-config-hint": "^0.0.2"
+  }
+}

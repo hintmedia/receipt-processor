@@ -1,0 +1,28 @@
+service: receipt-processor
+
+custom:
+  config: ${file(env.yml):${opt:stage, self:provider.stage}}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  profile: receipt-processor
+  region: us-west-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+      Resource: "arn:aws:s3:::${self:custom.config.bucket_name}/*"
+
+functions:
+  receipt-processor:
+    handler: handler.processEvent
+    events:
+      - s3:
+          bucket: ${self:custom.config.bucket_name}
+          event: s3:ObjectCreated:*
+    environment:
+      google_client_email: ${self:custom.config.google_client_email}
+      google_private_key: ${self:custom.config.google_private_key}
+      google_email_to_impersonate: ${self:custom.config.google_email_to_impersonate}
+      receipt_folder_id: ${self:custom.config.receipt_folder_id}
